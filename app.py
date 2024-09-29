@@ -33,32 +33,18 @@ def obtener_respuesta():
         speaker = "kelvin"
         # Almacenar en MongoDB
         mongo_db.almacenar_prompt_y_respuesta(text= prompt, speaker=speaker)
-        mongo_db.almacenar_prompt_y_respuesta(text= text, speaker= speaker)
+        mongo_db.almacenar_prompt_y_respuesta(text= text, speaker= "System")
         
         return jsonify({"speaker": speaker, "respuesta": text}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/prompts', methods=['GET'])
+@app.route('/api/data', methods=['GET'])
 def obtener_prompts():
     try:
         prompts = mongo_db.obtener_prompts()
         return jsonify(prompts), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/api/exportar-json', methods=['GET'])
-def exportar_json():
-    try:
-        prompts = mongo_db.obtener_prompts()
-        
-        # Escribir los datos en un archivo .txt
-        with open('prompts.json', 'w') as json_file:
-            json.dump(prompts, json_file, default=str)  # Convertir ObjectId a string
-
-        return send_file('prompts.json', as_attachment=True)  # Enviar el archivo como respuesta
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
