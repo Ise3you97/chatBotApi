@@ -1,9 +1,6 @@
 # app.py
-import json  # Asegúrate de importar el módulo json
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-from pymongo import MongoClient
-from datetime import datetime
 import openai
 from config import OPENAI_API_KEY
 from db import MongoDB
@@ -18,7 +15,7 @@ openai.api_key = OPENAI_API_KEY
 def obtener_respuesta():
     data = request.json
     prompt = data.get('prompt')
-    
+    speaker = data.get('speaker')
     if not prompt:
         return jsonify({"error": "Prompt no proporcionado"}), 400
 
@@ -30,7 +27,6 @@ def obtener_respuesta():
             ]
         )
         text = response['choices'][0]['message']['content']
-        speaker = "kelvin"
         # Almacenar en MongoDB
         mongo_db.almacenar_prompt_y_respuesta(text= prompt, speaker=speaker)
         mongo_db.almacenar_prompt_y_respuesta(text= text, speaker= "System")
