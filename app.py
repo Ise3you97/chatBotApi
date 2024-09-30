@@ -10,6 +10,7 @@ CORS(app)
 mongo_db = MongoDB()
 openai.api_key = OPENAI_API_KEY
 
+# Enviar datos 
 @app.route('/api/obtener-respuesta', methods=['POST'])
 def obtener_respuesta():
     data = request.json
@@ -30,11 +31,12 @@ def obtener_respuesta():
         mongo_db.almacenar_prompt_y_respuesta(text= prompt, speaker=speaker)
         mongo_db.almacenar_prompt_y_respuesta(text= text, speaker= "System")
         
-        return jsonify({"speaker": speaker, "respuesta": text}), 200
+        return jsonify({"speaker": speaker, "output": text}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Mostrar Datos
 @app.route('/api/data', methods=['GET'])
 def obtener_prompts():
     try:

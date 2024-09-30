@@ -7,7 +7,8 @@ class MongoDB:
         self.client = MongoClient(MONGO_URI)
         self.db = self.client[DB_NAME]
         self.collection = self.db[COLLECTION_NAME]
-
+        
+    # Funcion para almacenar datos
     def almacenar_prompt_y_respuesta(self, text, speaker):
         documento = {
             'speaker': speaker,
@@ -16,6 +17,7 @@ class MongoDB:
         }
         self.collection.insert_one(documento)
 
+    # Funcion para mostrar todos los datos 
     def obtener_prompts(self):
         # Convertir ObjectId a string
         return [
