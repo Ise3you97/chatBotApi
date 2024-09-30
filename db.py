@@ -1,4 +1,3 @@
-# db.py
 from pymongo import MongoClient
 from config import MONGO_URI, DB_NAME, COLLECTION_NAME
 from datetime import datetime
