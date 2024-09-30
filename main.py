@@ -32,5 +32,5 @@ if __name__ == "__main__":
         respuesta = obtener_respuesta(prompt)
         print("Respuesta:", respuesta)
 
-        # Almacenar el prompt, la respuesta y el timestamp en MongoDB
+        
         mongo_db.almacenar_prompt_y_respuesta(prompt, respuesta)
